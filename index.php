@@ -5,258 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Workloop | Freelance Services for Students</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-    * {margin: 0; padding: 0; box-sizing: border-box;}
-    body {font-family: 'Segoe UI', sans-serif; background: #fff; color: #333;}
-    a {text-decoration: none; color: inherit;}
-
-    .hero-container {
-      position: relative;
-      height: 100vh;
-      overflow: hidden;
-      color: white;
-    }
-    .hero-container video {
-      position: absolute;
-      width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: 0;
-    }
-    .hero-overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.2);
-      z-index: 1;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      text-align: start;
-      margin-left: 70px;
-      padding-top: 220px;
-    }
-    .hero-content h1 {
-      font-size: 4rem;
-      font-weight: 400;
-      margin-bottom: 20px;
-    }
-    .search-wrapper {
-      max-width: 1000px;
-     text-align: start;
-      display: flex;
-      background: #fff;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    .search-wrapper input {
-      flex: 1;
-      padding: 18px;
-      font-size: 16px;
-      border: none;
-    }
-    .search-wrapper button {
-      background: #222;
-      color: white;
-      padding: 0 22px;
-      margin: 5px;
-      border-radius: 8px ;
-      border: none;
-      cursor: pointer;
-    }
-    .tag-buttons {
-      margin-top: 25px;
-      display: flex;
-      flex-wrap: wrap;
-      /* justify-content: center; */
-      gap: 12px;
-    }
-    .tag {
-      background: rgba(255,255,255,0.1);
-      border: 1px solid white;
-      padding: 12px 22px;
-      border-radius: 10px;
-      color: white;
-      font-size: 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .tag:hover {
-      /* background: radial-gradient(63.44% 63.44% at 50% 50%,#c2ffe2 0,#fff 100%); */
-      /* border-color: #1dbf73; */
-    }
-    .new {background: yellow; color: black; font-size: 10px; padding: 2px 6px; border-radius: 10px;}
-    .trusted-by-section {
-    display: flex;
-  flex-direction: column;
-  margin: 120px 0px 90px 0px;
-  text-align: center;
-}
-
-.trusted-label {
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: white;
-}
-
-.trusted-logos {
-  display: flex;
-  flex-wrap: wrap;
-  /* justify-content: center; */
-  gap: 40px;
-}
-
-.trusted-logos img {
-  height: 20px;
-  max-width: 100px;
-  object-fit: contain;
-  transition: transform 0.3s ease;
-}
-
-.trusted-logos img:hover {
-  transform: scale(1.1);
-}
-
-    .categories {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      padding: 40px 20px;
-    }
-    .category-box {
-      padding: 12px 20px;
-      background: #f7f7f7;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: 0.3s;
-    }
-    .category-box:hover {
-      background: #1dbf73;
-      color: white;
-    }
-
-    .popular-section {
-      padding: 30px;
-    }
-    .popular-section h2 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: transform 0.3s;
-    }
-    .card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-    .card img {width: 100%; height: 120px; object-fit: cover;}
-    .card-body {padding: 10px; font-size: 14px;}
-
-    .guide-section {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-      padding: 40px;
-    }
-    .guide-box {
-      background: #f0f0f0;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      text-align: center;
-      transition: 0.3s;
-    }
-    .guide-box:hover {
-      background: #1dbf73;
-      color: white;
-    }
-
-    .featured-section,
-    .promo-section,
-    .testimonial-section,
-    .cta-section {
-      padding: 60px 30px;
-      text-align: center;
-    }
-
-    .featured-profiles {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 30px;
-    }
-
-    .profile-card {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 16px;
-      width: 200px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      transition: 0.3s;
-    }
-    .profile-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-    .profile-card img {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-    }
-
-    .testimonial {
-      background: #f7f7f7;
-      margin: 20px auto;
-      padding: 20px;
-      max-width: 600px;
-      border-radius: 12px;
-    }
-
-    .cta-section {
-      background: #1dbf73;
-      color: white;
-      padding: 60px 20px;
-    }
-    .cta-section h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-    .cta-section button {
-      padding: 12px 24px;
-      background: white;
-      color: #1dbf73;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .footer {
-      background: #f7f7f7;
-      padding: 40px;
-      text-align: center;
-      font-size: 14px;
-      color: #666;
-    }
-  </style>
+  <link rel="stylesheet" href="style/index.css">
+  <link rel="stylesheet" href="style/navbar.css">
+  <link rel="stylesheet" href="style/auth.css">
+  <?php $hideNavbarSearch = true; ?>
 </head>
+
 <body>
+ <?php include "components/Navbar.php"; ?>
+
+ <div id="authModal" class="modal">
+  <div class="modal-content">
+    
+    <div class="modal-left">
+      <h2>Success starts here</h2>
+      <ul>
+        <li>✔ Over 700 categories</li>
+        <li>✔ Quality work done faster</li>
+        <li>✔ Access to global talent</li>
+      </ul>
+    </div>
+    <div class="modal-right">
+       <?php
+if (isset($_SESSION['auth_error'])) {
+    echo '<p style="color: red;">' . $_SESSION['auth_error'] . '</p>';
+    unset($_SESSION['auth_error']);
+}
+if (isset($_SESSION['auth_success'])) {
+    echo '<p style="color: green;">' . $_SESSION['auth_success'] . '</p>';
+    unset($_SESSION['auth_success']);
+}
+?>
+      <span id="closeModalBtn" class="close">&times;</span>
+      <h2 id="formTitle">Login</h2>
+      <form id="authForm" action="login.php" method="POST">
+        <input type="text" name="name" placeholder="Full Name" style="display:none;" />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Continue</button>
+      </form>
+      <p id="toggleForm" style="margin-top: 15px;">
+        Don’t have an account? <a href="#" onclick="openModal('signup')">Sign up</a>
+      </p>
+     
+
+    </div>
+  </div>
+</div>
 
   <!-- Hero Section -->
   <div class="hero-container">
@@ -354,6 +149,21 @@
   <div class="footer">
     &copy; 2025 Workloop. All rights reserved.
   </div>
+  
+<!-- Model is start -->
+
+
+  
+
+  <script src="auth-modal.js"></script>
+<?php if (isset($_SESSION['auth_type'])): ?>
+  <script>
+    window.onload = () => {
+      openModal('<?php echo $_SESSION['auth_type']; ?>');
+    }
+  </script>
+  <?php unset($_SESSION['auth_type']); ?>
+<?php endif; ?>
 
 </body>
 </html>

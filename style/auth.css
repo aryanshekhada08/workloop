@@ -1,0 +1,88 @@
+/* Auth Modal Fiverr-style */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 12px;
+  width: 800px;
+  display: flex;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.modal-left {
+  flex: 1;
+  /* background: #b74157; */
+  background-image: url('/assets/image/auth-bg.png');
+  color: #fff;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-left h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.modal-left ul {
+  list-style: none;
+  padding: 0;
+}
+
+.modal-left ul li {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.modal-right {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal-right h2 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.modal-right form input {
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.modal-right button {
+  background-color: #1dbf73;
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  font-size: 28px;
+  color: #999;
+  cursor: pointer;
+}
