@@ -24,7 +24,7 @@
 .modal-left {
   flex: 1;
   /* background: #b74157; */
-  background-image: url('/assets/image/auth-bg.png');
+  background-image: url('assets/image/auth-bg.png');
   color: #fff;
   padding: 40px;
   display: flex;
