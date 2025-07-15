@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $hashed_password)) {
             $_SESSION['id'] = $id;
             $_SESSION['name'] = $name;
-            header("Location: dashboard.php");
+            header("Location: user/dashboard.php");
             exit();
         } else {
             $error = "❌ Incorrect password.";
@@ -37,6 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Redirect back to index with error message
 $_SESSION['auth_error'] = $error;
-header("Location: index.php");
-exit();
-?>
+// header("Location: index.php");
+// exit();
+// ?>
