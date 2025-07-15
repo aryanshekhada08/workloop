@@ -88,14 +88,22 @@ if (isset($_SESSION['auth_success'])) {
   </div>
 
   <!-- Categories -->
-  <div class="categories">
-    <div class="category-box">Logo Design</div>
-    <div class="category-box">WordPress</div>
-    <div class="category-box">Voice Over</div>
-    <div class="category-box">AI Artist</div>
-    <div class="category-box">Social Media</div>
-    <div class="category-box">SEO</div>
-    <div class="category-box">Video Editing</div>
+   <?php
+include 'db.php';
+
+$categories = mysqli_query($conn, "SELECT * FROM categories WHERE active = 1 ORDER BY id ");
+?>
+
+  <div class="container mt-5">
+    <h2>Popular Categories</h2>
+    <div class="categories d-flex gap-3 overflow-auto">
+      <?php while ($cat = mysqli_fetch_assoc($categories)) : ?>
+        <div class="category-box text-center border p-3 rounded shadow-sm">
+          <img src="<?= $cat['icon'] ?>" class="category-icon mb-2" style="height: 40px;" alt="">
+          <div class="category-name"><?= htmlspecialchars($cat['name']) ?></div>
+        </div>
+      <?php endwhile; ?>
+    </div>
   </div>
 
   <!-- Popular Services -->

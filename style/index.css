@@ -5,7 +5,7 @@
 
     .hero-container {
       position: relative;
-      height: 90vh;
+      height: 96vh;
       overflow: hidden;
       color: white;
     }
@@ -114,23 +114,46 @@
   transform: scale(1.1);
 }
 
+   .category-box {
+      width: 160px;
+      height: 140px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .category-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .category-icon {
+      height: 40px;
+      margin-bottom: 10px;
+    }
+
+    .category-name {
+      font-weight: 500;
+      font-size: 14px;
+      text-align: center;
+    }
+
     .categories {
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      padding: 40px 20px;
+      gap: 15px;
+      overflow-x: auto;
+      padding: 20px 0;
     }
-    .category-box {
-      padding: 12px 20px;
-      background: #f7f7f7;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      transition: 0.3s;
-    }
-    .category-box:hover {
-      background: #1dbf73;
-      color: white;
+
+    .categories::-webkit-scrollbar {
+      display: none;
     }
 
     .popular-section {

@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Handle image upload
   $iconPath = '';
   if (isset($_FILES['icon']) && $_FILES['icon']['error'] === 0) {
-    $targetDir = '../assets/icons/';
+    $targetDir = '../assets/image/cat_icons/';
     $filename = basename($_FILES['icon']['name']);
     $ext = pathinfo($filename, PATHINFO_EXTENSION);
     $newName = uniqid('cat_', true) . '.' . $ext;
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $allowed = ['png', 'jpg', 'jpeg', 'svg'];
     if (in_array(strtolower($ext), $allowed)) {
       if (move_uploaded_file($_FILES['icon']['tmp_name'], $targetFile)) {
-        $iconPath = '../assets/image/cat_icons/' . $newName; // path saved to DB
+        $iconPath = '/assets/image/cat_icons/' . $newName; // path saved to DB
       } else {
         $error = "Failed to upload icon.";
       }
