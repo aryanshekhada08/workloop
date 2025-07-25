@@ -16,7 +16,7 @@
     <a href="/services.php" class="block hover:text-green-600">🛠 Services</a>
     <a href="/admin/requests.php" class="block hover:text-green-600">📩 Requests</a>
     <a href="/admin/orders.php" class="block hover:text-green-600">📦 Orders</a>
-    <a href="/admin/logout.php" class="block text-red-500 hover:underline">🚪 Logout</a>
+    <a href="logout.php" class="block text-red-500 hover:underline">🚪 Logout</a>
   </nav>
 </aside>
 

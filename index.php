@@ -56,22 +56,8 @@
 
     <!-- Categories -->
     <?php
-  include 'db.php';
-
-  $categories = mysqli_query($conn, "SELECT * FROM categories WHERE active = 1 ORDER BY id ");
+    include "show_category.php";
   ?>
-
-    <div class="container mt-5">
-      <h2>Popular Categories</h2>
-      <div class="categories d-flex gap-3 overflow-auto">
-        <?php while ($cat = mysqli_fetch_assoc($categories)) : ?>
-          <div class="category-box text-center border p-3 rounded shadow-sm">
-            <img src="<?= $cat['icon'] ?>" class="category-icon mb-2" style="height: 40px;" alt="">
-            <div class="category-name"><?= htmlspecialchars($cat['name']) ?></div>
-          </div>
-        <?php endwhile; ?>
-      </div>
-    </div>
 
     <!-- Popular Services -->
     <div class="popular-section">

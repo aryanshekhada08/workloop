@@ -17,8 +17,8 @@ function openAuthModal(type = "signup") {
 
 // CLOSE modal
 function closeModal() {
-  authModal.classList.add("hidden");
-  roleModal.classList.add("hidden");
+  if (authModal) authModal.classList.add("hidden");
+  if (roleModal) roleModal.classList.add("hidden");
 }
 
 // Toggle auth type between login/signup
@@ -35,12 +35,13 @@ function setAuthType(type) {
     authFooter.innerHTML = `Don't have an account? <button onclick="setAuthType('signup')" class="text-[#1DBF73] underline">Sign up</button>`;
   }
 
-  // Clear errors
   authError.classList.add("hidden");
   formError.textContent = "";
+  // Ensure roleModal is hidden when switching auth type
+  if (roleModal) roleModal.classList.add("hidden");
 }
 
-// Submit form
+// Form submit handler
 authForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   formError.textContent = "";
@@ -70,7 +71,6 @@ authForm.addEventListener("submit", async (e) => {
     } else {
       formError.textContent = data.message || "Authentication failed.";
     }
-
   } catch (err) {
     console.error("Auth error:", err);
     formError.textContent = "Something went wrong. Please try again.";
@@ -79,7 +79,7 @@ authForm.addEventListener("submit", async (e) => {
   }
 });
 
-// Role selection
+// Role selection buttons
 document.getElementById("chooseFreelancer").addEventListener("click", () => {
   selectRole("freelancer");
 });
@@ -94,16 +94,30 @@ function selectRole(role) {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: `role=${encodeURIComponent(role)}`,
   })
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
       if (data.success && data.redirect) {
         window.location.href = data.redirect;
       } else {
         alert(data.message || "Failed to set role.");
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.error("Role error:", err);
       alert("Could not connect to server.");
     });
 }
+
+ window.openAuthModal = openAuthModal;
+// Close button listener
+const closeAuthBtn = document.getElementById("closeAuthBtn");
+if (closeAuthBtn) {
+  closeAuthBtn.addEventListener("click", closeModal);
+}
+
+// Optional: Close modal when clicking outside the modal content
+authModal?.addEventListener("click", function (e) {
+  if (e.target === authModal) {
+    closeModal();
+  }
+});

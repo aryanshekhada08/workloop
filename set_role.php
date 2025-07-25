@@ -1,27 +1,35 @@
 <?php
 session_start();
-require 'db.php'; // adjust if needed
+require 'db.php'; // adjust path if needed
+
+header('Content-Type: application/json');
 
 if (!isset($_SESSION['user_id'])) {
     echo json_encode(['success' => false, 'message' => 'Not logged in']);
     exit;
 }
 
-$role = $_POST['role'];
+$role = $_POST['role'] ?? '';
 $userId = $_SESSION['user_id'];
 
-// Validate role input
-if ($role !== 'freelancer' && $role !== 'client') {
-    echo json_encode(['success' => false, 'message' => 'Invalid role']);
+// Validate input
+$allowedRoles = ['freelancer', 'client'];
+if (!in_array($role, $allowedRoles)) {
+    echo json_encode(['success' => false, 'message' => 'Invalid role selected']);
     exit;
 }
 
-$update = mysqli_query($conn, "UPDATE users SET role='$role' WHERE id=$userId");
+// Prepare query securely
+$stmt = $conn->prepare("UPDATE users SET role = ? WHERE id = ?");
+$stmt->bind_param("si", $role, $userId);
 
-if ($update) {
+if ($stmt->execute()) {
     $_SESSION['role'] = $role;
     $redirect = $role === 'freelancer' ? 'freelancer/dashboard.php' : 'client/dashboard.php';
     echo json_encode(['success' => true, 'redirect' => $redirect]);
 } else {
     echo json_encode(['success' => false, 'message' => 'Failed to save role']);
 }
+
+$stmt->close();
+$conn->close();

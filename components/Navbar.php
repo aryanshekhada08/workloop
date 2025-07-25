@@ -47,8 +47,8 @@
       </div>
     <?php else: ?>
       <!-- Login/Join -->
-   <button class="login-btn" onclick="openModal('login')">Login</button>
-<button class="join-btn" onclick="openModal('signup')">Join</button>
+   <button class="login-btn" onclick="openAuthModal('login')">Login</button>
+<button class="join-btn" onclick="openAuthModal('signup')">Join</button>
     <?php endif; ?>
   </div>
 </nav>
