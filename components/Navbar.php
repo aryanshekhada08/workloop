@@ -13,10 +13,10 @@
 <nav class="navbar">
     <div class="nav-left">
   <a href="/" class="logo-container">
-    <img src="/assets/logo.png" alt="WorkLoop Logo" class="logo-img">
+    <img src="assets/logo4.png" alt="WorkLoop Logo" class="logo-img">
   </a>
     <!-- Menu -->
-    <ul class="nav-links">
+    <ul class="nav-links">  
       <li><a href="#">Explore</a></li>
       <li><a href="#">Categories</a></li>
       <li><a href="#">Become a Seller</a></li>
