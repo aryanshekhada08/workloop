@@ -52,12 +52,11 @@
     <?php endif; ?>
   </div>
 </nav>
-<script>
+<!-- <script>
   function toggleMenu() {
     const nav = document.getElementById("navLinks");
     nav.classList.toggle("active");
   }
-</script>
-
-</body>
+</script> -->
+<script src="../auth-modal.js"></script>
 </html>

@@ -1,48 +1,54 @@
-
-// ======== AUTH MODAL ========
+// Elements
 const authModal = document.getElementById("authModal");
 const authForm = document.getElementById("authForm");
+const nameField = document.getElementById("nameField");
+const authTypeInput = document.getElementById("auth_type");
+const modalTitle = document.getElementById("modalTitle");
+const authFooter = document.querySelector(".auth-footer");
+const authError = document.getElementById("authError");
+const formError = document.getElementById("formError");
+const roleModal = document.getElementById("roleModal");
 
-// Open auth modal
-document.getElementById("loginBtn").addEventListener("click", () => openAuthModal("login"));
-document.getElementById("joinBtn").addEventListener("click", () => openAuthModal("signup"));
-
-function openAuthModal(type) {
+// OPEN modal
+function openAuthModal(type = "signup") {
   authModal.classList.remove("hidden");
-  toggleAuthType(type);
+  setAuthType(type);
 }
 
-// Close auth modal
-document.querySelectorAll(".closeModal").forEach(btn =>
-  btn.addEventListener("click", () => authModal.classList.add("hidden"))
-);
+// CLOSE modal
+function closeModal() {
+  authModal.classList.add("hidden");
+  roleModal.classList.add("hidden");
+}
 
-// Toggle login/signup UI
-function toggleAuthType(type) {
-  document.querySelector('[name="auth_type"]').value = type;
-
-  const nameField = document.getElementById("nameField");
-  const title = document.getElementById("authTitle");
-  const submitBtn = document.getElementById("submitBtn");
-  const nameInput = document.querySelector('[name="name"]');
+// Toggle auth type between login/signup
+function setAuthType(type) {
+  authTypeInput.value = type;
 
   if (type === "signup") {
     nameField.classList.remove("hidden");
-    nameInput.setAttribute("required", "required");
-    title.textContent = "Create an account";
-    submitBtn.textContent = "Join";
+    modalTitle.textContent = "Create a new account";
+    authFooter.innerHTML = `Already have an account? <button onclick="setAuthType('login')" class="text-[#1DBF73] underline">Login</button>`;
   } else {
     nameField.classList.add("hidden");
-    nameInput.removeAttribute("required");
-    title.textContent = "Welcome Back";
-    submitBtn.textContent = "Login";
+    modalTitle.textContent = "Welcome back";
+    authFooter.innerHTML = `Don't have an account? <button onclick="setAuthType('signup')" class="text-[#1DBF73] underline">Sign up</button>`;
   }
+
+  // Clear errors
+  authError.classList.add("hidden");
+  formError.textContent = "";
 }
 
-// Handle auth form submission
+// Submit form
 authForm.addEventListener("submit", async (e) => {
   e.preventDefault();
+  formError.textContent = "";
+
   const formData = new FormData(authForm);
+  const submitBtn = authForm.querySelector("button[type='submit']");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Processing...";
 
   try {
     const res = await fetch("auth.php", {
@@ -51,60 +57,53 @@ authForm.addEventListener("submit", async (e) => {
     });
 
     const data = await res.json();
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Continue";
 
     if (data.success) {
-      if (data.showRoleModal) {
-        authModal.classList.add("hidden");
-        document.getElementById("roleModal").classList.remove("hidden");
-        document.getElementById("roleUserId").value = data.userId;
-      } else if (data.redirect) {
+      if (data.redirect) {
         window.location.href = data.redirect;
+      } else if (data.show_role_modal) {
+        authModal.classList.add("hidden");
+        roleModal.classList.remove("hidden");
       }
     } else {
-      alert(data.message || "Invalid login/signup.");
+      formError.textContent = data.message || "Authentication failed.";
     }
+
   } catch (err) {
-    console.error(err);
-    alert("Something went wrong.");
+    console.error("Auth error:", err);
+    formError.textContent = "Something went wrong. Please try again.";
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Continue";
   }
 });
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    const freelancerBtn = document.getElementById('chooseFreelancer');
-    const clientBtn = document.getElementById('chooseClient');
-
-    if (freelancerBtn && clientBtn) {
-        freelancerBtn.addEventListener('click', function () {
-            selectRole('freelancer');
-        });
-
-        clientBtn.addEventListener('click', function () {
-            selectRole('client');
-        });
-    }
-
-    function selectRole(role) {
-        fetch('set_role.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'role=' + encodeURIComponent(role)
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                window.location.href = data.redirect;
-            } else {
-                alert(data.message || 'Something went wrong.');
-            }
-        })
-        .catch(err => {
-            console.error('Error:', err);
-            alert('Failed to connect to server.');
-        });
-    }
+// Role selection
+document.getElementById("chooseFreelancer").addEventListener("click", () => {
+  selectRole("freelancer");
 });
 
+document.getElementById("chooseClient").addEventListener("click", () => {
+  selectRole("client");
+});
 
+function selectRole(role) {
+  fetch("set_role.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: `role=${encodeURIComponent(role)}`,
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success && data.redirect) {
+        window.location.href = data.redirect;
+      } else {
+        alert(data.message || "Failed to set role.");
+      }
+    })
+    .catch(err => {
+      console.error("Role error:", err);
+      alert("Could not connect to server.");
+    });
+}
