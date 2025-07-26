@@ -15,7 +15,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'client') {
 </head>
 <body class="bg-gray-100">
 
-<?php include '../components/Navbar.php'; ?>
+ <?php include '../components/Navbar.php'; ?>
+
 
 <div class="flex">
   <!-- Sidebar -->
@@ -25,6 +26,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'client') {
       <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Post a Request</a></li>
       <li><a href="#" class="block p-2 rounded hover:bg-gray-200">My Requests</a></li>
       <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Offers Received</a></li>
+      <li><a href="/workloop/logout.php" class="text-red-500 hover:underline">Logout</a></li>
     </ul>
   </aside>
 

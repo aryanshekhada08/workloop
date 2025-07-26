@@ -25,6 +25,8 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'freelancer') {
       <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Browse Requests</a></li>
       <li><a href="#" class="block p-2 rounded hover:bg-gray-200">My Offers</a></li>
       <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Accepted Projects</a></li>
+      <li><a href="/workloop/logout.php" class="text-red-500 hover:underline">Logout</a></li>
+
     </ul>
   </aside>
 
