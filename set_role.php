@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'db.php'; // adjust path if needed
+require 'db.php'; 
 
 header('Content-Type: application/json');
 

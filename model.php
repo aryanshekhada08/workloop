@@ -2,23 +2,22 @@
 <div id="authModal" class="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50 hidden p-4">
   <div class="relative flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl">
     
-    <!-- CLOSE BUTTON (NO INLINE JS NOW) -->
+    <!-- CLOSE BUTTON  -->
     <button id="closeAuthBtn" class="absolute top-2 right-3 text-gray-500 hover:text-black text-2xl font-bold z-10">
       &times;
     </button>
 
     <!-- LEFT PANEL -->
-    <div class="w-full md:w-1/2 bg-[#912c2c] text-white p-6 flex flex-col justify-center items-center text-center">
-      <h2 class="text-2xl md:text-3xl font-bold mb-4">Success starts here</h2>
-      <ul class="space-y-2 text-sm md:text-base">
-        <li>✔ Over 700 categories</li>
-        <li>✔ Quality work done faster</li>
-        <li>✔ Access to talent and businesses across the globe</li>
-      </ul>
-      <div class="mt-6 w-3/4 max-w-[250px]">
-        <img src="assets/image/auth-bg.png" alt="Work" class="w-full mx-auto rounded" />
-      </div>
-    </div>
+  <div class="w-full md:w-1/2 text-white p-6 flex flex-col justify-center items-center text-center bg-cover bg-center" style="background-image: url('assets/image/auth-bg.png');  background-blend-mode: darken;">
+  <h2 class="text-2xl md:text-3xl font-bold mb-13">Success starts here</h2>
+  <ul class="space-y-2 text-sm md:text-base  mb-10">
+    <li>✔ Over 700 categories</li>
+    <li>✔ Quality work done faster</li>
+    <li>✔ Access to talent and businesses across the globe</li>
+  </ul>
+</div>
+
+
 
     <!-- RIGHT PANEL -->
     <div class="w-full md:w-1/2 p-6 md:p-8 bg-white">
@@ -68,12 +67,12 @@
     <div class="flex flex-col sm:flex-row gap-6 justify-center">
       <!-- Freelancer Button -->
       <button id="chooseFreelancer" class="w-full sm:w-1/2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white text-lg font-medium py-3 rounded-xl shadow-md hover:shadow-lg transition duration-300">
-        🎯 Freelancer
+        I am Freelancer
       </button>
 
       <!-- Client Button -->
       <button id="chooseClient" class="w-full sm:w-1/2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white text-lg font-medium py-3 rounded-xl shadow-md hover:shadow-lg transition duration-300">
-        🧑‍💼 Client
+         I am Client
       </button>
     </div>
   </div>

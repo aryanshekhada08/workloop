@@ -41,6 +41,7 @@
       background: #fff;
       border-radius: 8px;
       overflow: hidden;
+      outline: none;
     }
     .search-wrapper input {
       flex: 1;
