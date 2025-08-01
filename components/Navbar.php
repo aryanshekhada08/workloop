@@ -5,8 +5,8 @@ $isLoggedIn = isset($_SESSION['user_id']);
 <nav class="bg-white border-b shadow px-6 py-4 sticky top-0 z-50">
   <div class="flex justify-between items-center">
     <!-- Logo -->
-    <a href="/index.php" class="flex items-center space-x-2">
-      <img src="/assets/logo.png" alt="WorkLoop Logo" class="h-9 w-auto object-contain">
+    <a href="/index.php" class="flex items-center space-x-1">
+      <img src="../assets/logo.png" alt="WorkLoop Logo" class="h-9 w-auto object-contain">
     </a>
 
     <!-- Mobile Search Icon -->
