@@ -55,7 +55,7 @@ $role = $_SESSION['role'] ?? '';
           </a>
         </li>
         <li>
-          <a href="profile" class="flex items-center p-3 rounded-lg hover:bg-[#1DBF73] hover:text-white transition">
+          <a href="profile.php" class="flex items-center p-3 rounded-lg hover:bg-[#1DBF73] hover:text-white transition">
             <i class="fa-solid fa-user mr-2"></i> Profile
           </a>
         </li>
