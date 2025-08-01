@@ -2,12 +2,12 @@
 session_start();
 require("../db.php");
 
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'freelancer') {
+if (!isset($_SESSION['user_id'])) {
     header("Location: ../index.php");
     exit();
 }
 
-$message = "";
+$message = '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $title = trim($_POST['title']);
@@ -17,10 +17,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $category = trim($_POST['category']);
     $image = $_FILES['image'];
 
-    if ($title && $description && $price && $delivery_time && $image['name']) {
-        $imgName = time() . "_" . basename($image['name']);
-        $targetPath = "../uploads/gigs/" . $imgName;
+    $image = $_FILES['image'];
 
+if ($title && $description && $price && $delivery_time && $category && $image['name']) {
+    // Validate image size (max 1MB = 1048576 bytes)
+    if ($image['size'] > 1048576) {
+        $message = "Image must be less than 1MB.";
+    } else {
+        $uploadDir = "assets/image/uploads/gigs/";
+        $imgName = time() . "_" . basename($image['name']);
+        $targetPath = $uploadDir . $imgName;
+
+        // Ensure directory exists
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        // Upload the image
         if (move_uploaded_file($image['tmp_name'], $targetPath)) {
             $freelancer_id = $_SESSION['user_id'];
             $stmt = $conn->prepare("INSERT INTO gigs (freelancer_id, title, description, price, delivery_time, category, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -29,15 +42,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($stmt->execute()) {
                 $message = "Gig added successfully!";
             } else {
-                $message = "Error saving gig.";
+                $message = "Error saving gig to database.";
             }
         } else {
             $message = "Failed to upload image.";
         }
-    } else {
-        $message = "Please fill in all required fields.";
     }
+} else {
+    $message = "Please fill in all required fields.";
 }
+
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       </div>
     <?php endif; ?>
 
-    <form method="POST" enctype="multipart/form-data" class="bg-white p-9 ml-44 rounded shadow-md max-w-3xl">
+    <form method="POST"  action=""  enctype="multipart/form-data" class="bg-white p-9 ml-44 rounded shadow-md max-w-3xl">
       <div class="mb-4">
         <label class="block mb-1 font-medium">Title <span class="text-red-500">*</span></label>
         <input type="text" name="title" required class="w-full border border-gray-300 p-2 rounded">

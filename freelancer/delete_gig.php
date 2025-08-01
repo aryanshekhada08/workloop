@@ -3,29 +3,28 @@ session_start();
 require '../db.php';
 
 // Check if freelancer is logged in
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'freelancer') {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'freelancer') {
     header("Location: ../index.php");
     exit();
 }
 
-// Check if gig ID is provided
-if (isset($_GET['id'])) {
-    $gig_id = $_GET['id'];
-    $freelancer_id = $_SESSION['id'];
+$freelancer_id = $_SESSION['user_id']; // ✅ use same session key
 
-    // Delete only if gig belongs to the logged-in freelancer
+if (isset($_GET['id'])) {
+    $gig_id = intval($_GET['id']);
+
     $stmt = $conn->prepare("DELETE FROM gigs WHERE id = ? AND freelancer_id = ?");
     $stmt->bind_param("ii", $gig_id, $freelancer_id);
 
     if ($stmt->execute()) {
-        $_SESSION['gig_message'] = "Gig deleted successfully.";
+        $_SESSION['gig_message'] = "✅ Gig deleted successfully.";
     } else {
-        $_SESSION['gig_message'] = "Error deleting gig.";
+        $_SESSION['gig_message'] = "❌ Error deleting gig.";
     }
 
     $stmt->close();
 }
 
-header("Location: view_gigs.php");
+header("Location: my_gigs.php");
 exit();
 ?>

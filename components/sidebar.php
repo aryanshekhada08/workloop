@@ -3,7 +3,7 @@
 $role = $_SESSION['role'] ?? '';
 ?>
 
-<div class="w-64 h-screen bg-white shadow-lg fixed top-0 left-0 z-40 flex flex-col justify-between">
+<div class="w-64 h-screen bg-white shadow-lg fixed top-20 left-0 z-40 flex flex-col justify-between">
   <div>
     <!-- Sidebar Links -->
     <nav class="px-4 py-6">
@@ -55,7 +55,7 @@ $role = $_SESSION['role'] ?? '';
           </a>
         </li>
         <li>
-          <a href="profile.php" class="flex items-center p-3 rounded-lg hover:bg-[#1DBF73] hover:text-white transition">
+          <a href="profile" class="flex items-center p-3 rounded-lg hover:bg-[#1DBF73] hover:text-white transition">
             <i class="fa-solid fa-user mr-2"></i> Profile
           </a>
         </li>

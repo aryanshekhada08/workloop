@@ -9,10 +9,14 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'freelancer') {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch gigs
 $sql = "SELECT * FROM gigs WHERE freelancer_id = $user_id ORDER BY created_at DESC";
 $result = $conn->query($sql);
 ?>
+<?php if (isset($_SESSION['gig_message'])): ?>
+    <div class="p-2 bg-green-100 text-green-800 rounded mb-4">
+        <?= $_SESSION['gig_message']; unset($_SESSION['gig_message']); ?>
+    </div>
+<?php endif; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +44,7 @@ $result = $conn->query($sql);
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php while ($gig = $result->fetch_assoc()): ?>
           <div class="bg-white rounded-lg shadow p-4 hover:shadow-lg transition">
-            <img src="../uploads/gigs/<?= $gig['image'] ?>" alt="Gig Image" class="w-full h-40 object-cover rounded-md mb-4">
+            <img src="../assets/image/uploads/gigs/<?= $gig['image'] ?>" alt="Gig Image" class="w-full h-40 object-cover rounded-md mb-4">
             <h2 class="text-xl font-semibold mb-2"><?= htmlspecialchars($gig['title']) ?></h2>
             <p class="text-gray-600 mb-2">₹<?= number_format($gig['price'], 2) ?> • <?= $gig['delivery_time'] ?> days</p>
             <div class="flex justify-between">

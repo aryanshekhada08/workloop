@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'freelancer') {
 }
 
 $user_id = $_SESSION['user_id'];
-$nmae = $_SESSION['name'] ?? 'Freelancer';
+// $name = $_SESSION['name'] ?? 'Freelancer';
 
 // Fetch data
 // Total Gigs
@@ -36,6 +36,8 @@ $totalEarnings = $earningResult->fetch_row()[0] ?? 0;
 <body class="bg-gray-100">
   
   <?php include("../components/sidebar.php"); ?>
+  <?php include("../components/Navbar.php"); ?>
+
 
   <div class="ml-64 p-6">
     <h1 class="text-3xl font-bold mb-6">Welcome, <?= $_SESSION['name'] ?> 👋</h1>

@@ -3,10 +3,10 @@ session_start();
 require '../db.php';
 
 // Check freelancer authentication
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'freelancer') {
-    header("Location: ../index.php");
-    exit();
-}
+// if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'freelancer') {
+//     header("Location: ../index.php");
+//     exit();
+// }
 
 $freelancer_id = $_SESSION['id'];
 $result = $conn->prepare("SELECT * FROM gigs WHERE freelancer_id = ? ORDER BY created_at DESC");

@@ -23,8 +23,7 @@
 .category-box:hover {
   transform: translateY(-4px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  /* background: linear-gradient(135deg, #00c767, #00e19b); Green Gradient */
-   background: linear-gradient(135deg, #96f8c59d, #8ad0b184);
+   background: linear-gradient(135deg, #5feea4ea);
 
 }
 
@@ -72,7 +71,7 @@ $categories = mysqli_query($conn, "SELECT * FROM categories");
     <div class="categories ">
       <?php while ($cat = mysqli_fetch_assoc($categories)) : ?>
         <div class="category-box ">
-          <img src="<?= $cat['icon'] ?>" class="category-icon " style="height: 40px;" alt="">
+          <img src="./<?= $cat['icon'] ?>" class="category-icon " style="height: 40px;" alt="">
           <div class="category-name"><?= htmlspecialchars($cat['name']) ?></div>
         </div>
       <?php endwhile; ?>
