@@ -10,7 +10,11 @@ if (!isset($hideNavbarSearch)) $hideNavbarSearch = false;
 <nav class="bg-white shadow-md py-3 px-4">
   <div class="max-w-7xl mx-auto flex items-center justify-between">
 
-   
+    <!-- Logo -->
+    <a href="/index.php" class="flex items-center space-x-2">
+      <img src="/assets/logo.png" alt="WorkLoop Logo" class="h-8">
+    </a>
+
     <!-- Search (Only if not hidden) -->
     <?php if (empty($hideNavbarSearch)): ?>
       <div class="hidden md:block w-full max-w-md mx-4">
