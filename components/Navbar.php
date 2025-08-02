@@ -1,3 +1,4 @@
+
 <?php
 $role = $_SESSION['role'] ?? '';
 $isLoggedIn = isset($_SESSION['user_id']);
@@ -55,7 +56,19 @@ $isLoggedIn = isset($_SESSION['user_id']);
           </a>
           <a href="/freelancer/profile.php" class="hover:text-green-600 transition">⚙️</a> -->
         <?php endif; ?>
-        <a href="/logout.php" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full transition">Logout</a>
+        <!-- <a href="/logout.php" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full transition">Logout</a> -->
+         <div class="relative">
+  <a href="/workloop/<?php echo $_SESSION['role']; ?>/messages.php" class="text-gray-600 hover:text-blue-600">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+    </svg>
+    <span id="unreadCount" class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1 hidden">0</span>
+  </a>
+</div>
+
+
       <?php else: ?>
         <button onclick="openAuthModal('login')" class="hover:text-green-600">Login</button>
         <button onclick="openAuthModal('signup')" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full">Join</button>
@@ -116,4 +129,25 @@ $isLoggedIn = isset($_SESSION['user_id']);
   mobileSearchToggle?.addEventListener("click", () => {
     mobileSearch.classList.toggle("hidden");
   });
+</script>
+
+<script>
+function fetchUnreadCount() {
+  fetch("/workloop/fetch_unread_count.php")
+    .then(response => response.text())
+    .then(count => {
+      const countSpan = document.getElementById("unreadCount");
+      const num = parseInt(count);
+      if (num > 0) {
+        countSpan.textContent = num;
+        countSpan.classList.remove("hidden");
+      } else {
+        countSpan.classList.add("hidden");
+      }
+    });
+}
+
+// Fetch every 10 seconds
+setInterval(fetchUnreadCount, 10000);
+fetchUnreadCount(); // Initial load
 </script>

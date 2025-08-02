@@ -13,28 +13,42 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'client') {
   <title>Client Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
-
- <?php include '../components/Navbar.php'; ?>
-
+<body class="bg-gray-100 min-h-screen">
 
 <div class="flex">
   <!-- Sidebar -->
-  <aside class="w-64 bg-white h-screen shadow-md p-4">
-    <h2 class="text-xl font-bold mb-4">Client Menu</h2>
-    <ul class="space-y-2">
-      <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Post a Request</a></li>
-      <li><a href="#" class="block p-2 rounded hover:bg-gray-200">My Requests</a></li>
-      <li><a href="#" class="block p-2 rounded hover:bg-gray-200">Offers Received</a></li>
-      <li><a href="/workloop/logout.php" class="text-red-500 hover:underline">Logout</a></li>
-    </ul>
-  </aside>
+  <?php include("../components/sidebar.php"); ?>
 
-  <!-- Main Content -->
-  <main class="flex-1 p-6">
-    <h1 class="text-2xl font-semibold mb-4">Welcome, Client!</h1>
-    <p>This is your dashboard. You can post job requests and manage offers here.</p>
-  </main>
+  <div class="flex flex-col w-full">
+    <!-- Navbar -->
+    <?php include("../components/Navbar.php"); ?>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 max-w-6xl mx-auto">
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-semibold text-gray-800 mb-4">Welcome, Client 👋</h1>
+        <p class="text-gray-600 mb-4">This is your dashboard. From here you can post new job requests, view freelancer offers, and manage your projects.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+          <!-- Card 1 -->
+          <div class="bg-blue-100 p-4 rounded-lg shadow-sm">
+            <h2 class="text-lg font-medium text-blue-900">Total Requests</h2>
+            <p class="text-3xl font-bold text-blue-700 mt-2">3</p>
+          </div>
+          <!-- Card 2 -->
+          <div class="bg-green-100 p-4 rounded-lg shadow-sm">
+            <h2 class="text-lg font-medium text-green-900">Offers Received</h2>
+            <p class="text-3xl font-bold text-green-700 mt-2">5</p>
+          </div>
+          <!-- Card 3 -->
+          <div class="bg-yellow-100 p-4 rounded-lg shadow-sm">
+            <h2 class="text-lg font-medium text-yellow-900">Active Orders</h2>
+            <p class="text-3xl font-bold text-yellow-700 mt-2">2</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
 </div>
 
 </body>

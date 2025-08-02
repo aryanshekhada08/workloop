@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     <?php endif; ?>
  <?php include("../components/sidebar.php"); ?>
-  <?php include("../components/Navbar.php"); ?>
+  
     <form method="POST" enctype="multipart/form-data" class="space-y-4">
         <div>
            <div class="mt-2">
