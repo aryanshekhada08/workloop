@@ -7,7 +7,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
   <div class="flex justify-between items-center">
     <!-- Logo -->
     <a href="/index.php" class="flex items-center space-x-1">
-      <img src="../assets/logo.png" alt="WorkLoop Logo" class="h-9 w-auto object-contain">
+      <img src="/workloop/assets/logo.png" alt="WorkLoop Logo" class="h-9 w-auto object-contain">
     </a>
 
     <!-- Mobile Search Icon -->
