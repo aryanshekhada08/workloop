@@ -2,7 +2,7 @@
 session_start();
 require("../db.php");
 
-// Check client login
+// Protect client access
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'client') {
     header("Location: ../index.php");
     exit();
@@ -10,84 +10,91 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'client') {
 
 $client_id = $_SESSION['user_id'];
 
-$query = "SELECT o.*, g.title AS gig_title, u.name AS freelancer_name, u.profile_image
-          FROM orders o
-          JOIN gigs g ON o.gig_id = g.id
-          JOIN users u ON o.freelancer_id = u.id
-          WHERE o.client_id = ?
-          ORDER BY o.created_at DESC";
-
-$stmt = $conn->prepare($query);
+// Fetch client orders
+$stmt = $conn->prepare("
+    SELECT o.*, g.title AS gig_title, g.image AS gig_image, u.name AS freelancer_name, g.freelancer_id
+    FROM orders o
+    JOIN gigs g ON o.gig_id = g.id
+    JOIN users u ON g.freelancer_id = u.id
+    WHERE o.client_id = ?
+    ORDER BY o.created_at DESC
+");
 $stmt->bind_param("i", $client_id);
 $stmt->execute();
-$result = $stmt->get_result();
+$orders = $stmt->get_result();
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Client Orders - Workloop</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - Workloop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+ <?php include("../components/sidebar.php"); ?>
+<body class="bg-gray-50">
+ <?php include("../components/Navbar.php"); ?>
+<div class="flex h-screen">
+    <!-- Main -->
+    <div class="flex flex-col flex-1 md:ml-64">
 
-  <!-- Navbar -->
-  <?php include("../components/Navbar.php"); ?>
+        <!-- Content -->
+        <main class="flex-1 p-6 overflow-y-auto">
+            <?php if ($orders->num_rows > 0): ?>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <?php while ($order = $orders->fetch_assoc()): ?>
+                        <div class="bg-white rounded-xl shadow-sm hover:shadow-md transition border">
+                            <img src="../assets/image/uploads/gigs/<?= htmlspecialchars($order['gig_image']) ?>" 
+                                 alt="Gig Image" class="w-full h-40 object-cover rounded-t-xl">
+                            <div class="p-4">
+                                <h2 class="text-lg font-semibold text-gray-800"><?= htmlspecialchars($order['gig_title']) ?></h2>
+                                <p class="text-sm text-gray-500">By <?= htmlspecialchars($order['freelancer_name']) ?></p>
 
-  <div class="flex min-h-screen">
+                                <!-- Status -->
+                                <div class="mt-3">
+                                    <span class="px-3 py-1 text-xs font-medium rounded-full
+                                        <?= $order['status'] === 'completed' ? 'bg-green-100 text-green-700' : '' ?>
+                                        <?= $order['status'] === 'active' ? 'bg-blue-100 text-blue-700' : '' ?>
+                                        <?= $order['status'] === 'pending' ? 'bg-yellow-100 text-yellow-700' : '' ?>
+                                        <?= $order['status'] === 'cancelled' ? 'bg-red-100 text-red-700' : '' ?>">
+                                        <?= ucfirst($order['status']) ?>
+                                    </span>
+                                </div>
 
-    <!-- Sidebar -->
-    <?php include("../components/sidebar.php"); ?>
+                                <!-- Dates -->
+                                <div class="mt-3 text-sm text-gray-500">
+                                    Ordered: <?= date('M d, Y', strtotime($order['created_at'])) ?>
+                                </div>
 
-    <!-- Main Content Area -->
-    <main class="flex-1 p-6 sm:p-8">
-      <h1 class="text-2xl font-bold mb-6 text-gray-800">📦 My Orders</h1>
+                                <!-- Button -->
+                               <!-- Button -->
+                                    <div class="mt-4 flex gap-3">
+                                        <a href="order_details.php?id=<?= $order['id'] ?>" 
+                                        class="inline-block bg-blue-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                                            View Details
+                                        </a>
 
-      <?php if ($result->num_rows > 0): ?>
-        <div class="grid grid-cols-1 gap-6">
-          <?php while ($row = $result->fetch_assoc()): ?>
-            <div class="bg-white rounded-xl shadow p-6">
-              <div class="flex items-center gap-4 mb-4">
-                <img src="../assets/image/user/<?= htmlspecialchars($row['profile_image'] ?? 'default.png') ?>" 
-                     alt="Freelancer" 
-                     class="w-14 h-14 rounded-full object-cover border border-gray-300">
-                <div>
-                  <h2 class="text-lg font-semibold"><?= htmlspecialchars($row['gig_title']) ?></h2>
-                  <p class="text-sm text-gray-600">by <?= htmlspecialchars($row['freelancer_name']) ?></p>
+                                        <!-- Messages Button -->
+                                        <a href="chat.php?user_id=<?= $order['freelancer_id'] ?>" 
+                                        class="inline-block bg-purple-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                                            💬 Messages
+                                        </a>
+                                    </div>
+
+                            </div>
+                        </div>
+                    <?php endwhile; ?>
                 </div>
-              </div>
+            <?php else: ?>
+                <div class="bg-white shadow rounded-xl p-6 text-center text-gray-600">
+                    You don’t have any orders yet.
+                </div>
+            <?php endif; ?>
+        </main>
+    </div>
+</div>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-700 text-sm">
-                <p><span class="font-semibold">Status:</span> <span class="capitalize"><?= $row['status'] ?></span></p>
-                <p><span class="font-semibold">Amount:</span> ₹<?= number_format($row['amount'], 2) ?></p>
-                <p class="col-span-1 sm:col-span-2"><span class="font-semibold">Requirements:</span> <?= nl2br(htmlspecialchars($row['requirements'])) ?></p>
-                <p><span class="font-semibold">Ordered On:</span> <?= date("d M Y", strtotime($row['created_at'])) ?></p>
-                <?php if ($row['delivery_file']): ?>
-                  <p class="col-span-1 sm:col-span-2">
-                    <span class="font-semibold">Delivery File:</span>
-                    <a href="../uploads/delivery/<?= htmlspecialchars($row['delivery_file']) ?>" 
-                       class="text-blue-600 underline" download>Download</a>
-                  </p>
-                <?php endif; ?>
-              </div>
 
-              <!-- Message Button -->
-              <div class="mt-4">
-                <a href="message_freelancer.php?freelancer_id=<?= $row['freelancer_id'] ?>" 
-                   class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm">
-                  💬 Message Freelancer
-                </a>
-              </div>
-            </div>
-          <?php endwhile; ?>
-        </div>
-      <?php else: ?>
-        <div class="text-gray-600">You have no orders yet.</div>
-      <?php endif; ?>
-    </main>
 
-  </div>
 </body>
 </html>

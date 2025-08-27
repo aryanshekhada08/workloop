@@ -28,10 +28,12 @@
       <div class="hero-overlay"></div>
       <div class="hero-content">
         <h1>Our freelancers <span> <br> will take it from here</span></h1>
-        <div class="search-wrapper">
-          <input type="text" placeholder="Search for any service..." />
-          <button><i class="fas fa-search"></i></button>
-        </div>
+        
+          <form method="GET" action="/workloop/client/search.php" class="search-wrapper">
+            <input type="text" name="search" placeholder="Search for any service..." required />
+            <button type="submit"><i class="fas fa-search"></i></button>
+          </form>
+        
         <div class="tag-buttons">
           <div class="tag">website development →</div>
           <div class="tag">architecture & interior →</div>

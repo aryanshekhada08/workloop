@@ -43,14 +43,14 @@ $role = $_SESSION['role'] ?? '';
             </a>
           </li>
           <li>
-            <a href="my_orders.php" class="flex items-center p-3 rounded-lg hover:bg-[#1DBF73] hover:text-white transition">
+            <a href="orders.php" class="flex items-center p-3 rounded-lg hover:bg-[#1DBF73] hover:text-white transition">
               <i class="fa-solid fa-receipt mr-2"></i> My Requests
             </a>
           </li>
         <?php endif; ?>
 
         <li>
-          <a href="my_orders.php" class="flex items-center p-3 rounded-lg hover:bg-[#1DBF73] hover:text-white transition">
+          <a href="messages.php" class="flex items-center p-3 rounded-lg hover:bg-[#1DBF73] hover:text-white transition">
             <i class="fa-solid fa-envelope mr-2"></i> Messages
           </a>
         </li>
