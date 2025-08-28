@@ -2,7 +2,7 @@
 session_start();
 require("../db.php");
 
-// Require logged-in user (role can be adjusted if needed)
+// Optional: enforce login if needed
 // if (!isset($_SESSION['user_id'])) {
 //     header("Location: ../index.php");
 //     exit();
@@ -11,20 +11,19 @@ require("../db.php");
 $search = trim($_GET['search'] ?? '');
 $category = $_GET['category'] ?? '';
 
-// Redirect to explore page if search is empty
 if ($search === '') {
     header("Location: explore.php");
     exit();
 }
 
-// Fetch all categories from 'categories' table (category names as strings)
+// Fetch all categories for dropdown filter (category names as strings)
 $categories = [];
 $cat_result = $conn->query("SELECT name FROM categories ORDER BY name ASC");
 while ($cat = $cat_result->fetch_assoc()) {
     $categories[] = $cat['name'];
 }
 
-// Build SQL query with filters for gig title and category (category as string)
+// Base SQL with proper join to get category name
 $sql = "SELECT gigs.*, users.name AS freelancer_name, users.profile_image
         FROM gigs
         JOIN users ON gigs.freelancer_id = users.id";
@@ -56,6 +55,8 @@ if ($params) {
 }
 $stmt->execute();
 $result = $stmt->get_result();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -63,11 +64,10 @@ $result = $stmt->get_result();
 
 <head>
     <meta charset="UTF-8" />
-    <title>Search Results - WorkLoop</title>
+    <title>Search Results - Workloop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
 </head>
 
 <body class="bg-gray-100 text-gray-800 min-h-screen">
@@ -87,7 +87,8 @@ $result = $stmt->get_result();
                 <input type="text" name="search" placeholder="Search gigs by title..."
                     value="<?= htmlspecialchars($search) ?>"
                     class="flex-grow border border-gray-300 rounded-full px-5 py-2 focus:outline-none focus:ring-2 focus:ring-green-500 shadow-sm" />
-                <select name="category" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+                <select name="category"
+                    class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">All Categories</option>
                     <?php foreach ($categories as $catName): ?>
                         <option value="<?= htmlspecialchars($catName) ?>" <?= ($catName === $category) ? 'selected' : '' ?>>
@@ -120,6 +121,7 @@ $result = $stmt->get_result();
                                 <div>
                                     <h2 class="text-lg font-semibold"><?= htmlspecialchars($row['title']) ?></h2>
                                     <p class="text-sm text-gray-500 mt-1"><?= htmlspecialchars(substr($row['description'], 0, 80)) ?>...</p>
+                                    <p class="text-xs text-gray-400 mt-1 italic">Category: <?= htmlspecialchars($row['category_name'] ?? 'Uncategorized') ?></p>
                                 </div>
                                 <div class="mt-4 flex items-center justify-between">
                                     <div class="flex items-center space-x-2">

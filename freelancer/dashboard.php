@@ -163,3 +163,5 @@ $recentOrdersResult = $conn->query("
 
 </body>
 </html>
+<?php include("../components/footer.php"); ?>
+

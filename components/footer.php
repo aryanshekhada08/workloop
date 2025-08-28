@@ -1,12 +1,19 @@
 <head>
   <style>
-    /* Footer column-wise layout */
     footer {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-        Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+        Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
       background-color: #1f2937; /* Tailwind gray-800 */
       color: #d1d5db; /* Tailwind gray-300 */
       padding: 2rem 1.5rem;
+      margin-left: 0; /* default no margin on small */
+    }
+
+    /* On md and above, add left margin equal to sidebar width */
+    @media (min-width: 768px) {
+      footer {
+        margin-left: 16rem; /* 64 * 4 (Tailwind w-64 = 16rem sidebar) */
+      }
     }
 
     footer .footer-container {
@@ -25,7 +32,7 @@
 
     footer h2,
     footer h3 {
-      color: #f9fafb; /* Tailwind gray-50 */
+      color: #f9fafb;
       font-weight: 700;
       margin-bottom: 1rem;
       letter-spacing: 0.05em;
@@ -42,7 +49,7 @@
 
     footer a:hover,
     footer a:focus {
-      color: #22c55e; /* Tailwind green-500 */
+      color: #22c55e;
       outline: none;
       text-decoration: underline;
     }
@@ -84,10 +91,10 @@
     }
 
     footer .copyright {
-      border-top: 1px solid #374151; /* Tailwind gray-700 */
+      border-top: 1px solid #374151;
       padding-top: 1.5rem;
       font-size: 0.8rem;
-      color: #9ca3af; /* Tailwind gray-400 */
+      color: #9ca3af;
       user-select: none;
       text-align: center;
       margin: 2rem auto 0;
@@ -108,7 +115,6 @@
 
 <footer>
   <div class="footer-container">
-
     <div class="footer-column about">
       <h2>Workloop</h2>
       <p>
@@ -133,50 +139,25 @@
       <h3>Contact Us</h3>
       <p>
         <a href="mailto:support@workloop.com" tabindex="0" aria-label="Email support at support@workloop.com"
-          >support@workloop.com</a
-        ><br />
-        Phone: <a href="tel:+11234567890" tabindex="0" aria-label="Call phone number +1 123 456 7890">+1 (123) 456-7890</a>
+          >support@workloop.com</a><br />
+        Phone: <a href="tel:+11234567890" tabindex="0" aria-label="Call phone number +1 123 456 7890"
+          >+1 (123) 456-7890</a>
       </p>
       <div class="social-icons" aria-label="Social media links">
-        <a
-          href="#"
-          aria-label="Facebook"
-          title="Facebook"
-          target="_blank"
-          rel="noopener noreferrer"
-          tabindex="0"
+        <a href="#" aria-label="Facebook" title="Facebook" target="_blank" rel="noopener noreferrer" tabindex="0"
           ><i class="fab fa-facebook-f" aria-hidden="true"></i
         ></a>
-        <a
-          href="#"
-          aria-label="Twitter"
-          title="Twitter"
-          target="_blank"
-          rel="noopener noreferrer"
-          tabindex="0"
+        <a href="#" aria-label="Twitter" title="Twitter" target="_blank" rel="noopener noreferrer" tabindex="0"
           ><i class="fab fa-twitter" aria-hidden="true"></i
         ></a>
-        <a
-          href="#"
-          aria-label="LinkedIn"
-          title="LinkedIn"
-          target="_blank"
-          rel="noopener noreferrer"
-          tabindex="0"
+        <a href="#" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer" tabindex="0"
           ><i class="fab fa-linkedin-in" aria-hidden="true"></i
         ></a>
-        <a
-          href="#"
-          aria-label="Instagram"
-          title="Instagram"
-          target="_blank"
-          rel="noopener noreferrer"
-          tabindex="0"
+        <a href="#" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer" tabindex="0"
           ><i class="fab fa-instagram" aria-hidden="true"></i
         ></a>
       </div>
     </div>
-
   </div>
 
   <div class="copyright">
