@@ -31,7 +31,7 @@ $categories = mysqli_query($conn, "SELECT * FROM categories ORDER BY created_at 
 <div class="md:flex">
   <?php include 'includes/sidebar.php'; ?>
 
-  <main class="flex-1 p-6 md:p-10 md:ml-64 mt-20 md:mt-0">
+  <main class="flex-1 p-6 md:p-10 md:ml-34 mt-20 md:mt-0">
     <div class="flex justify-between items-center mb-6">
       <h1 class="text-2xl font-bold text-gray-800">📂 Categories</h1>
       <a href="add_category.php" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded">➕ Add Category</a>
@@ -74,10 +74,10 @@ $categories = mysqli_query($conn, "SELECT * FROM categories ORDER BY created_at 
               <td class="px-4 py-3"><?= date('d M Y', strtotime($row['created_at'])) ?></td>
               <td class="px-4 py-3 text-right">
                 <!-- Optional: Edit -->
-                <a href="edit_category.php?id=<?= $row['id'] ?>" class="text-blue-600 hover:underline mr-4">Edit</a>
+                <a href="edit_category.php?id=<?= $row['id'] ?>" class="inline-block bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md text-xs">Edit</a>
                 <!-- Delete -->
                 <a href="?delete=<?= $row['id'] ?>" onclick="return confirm('Delete this category?')"
-                   class="text-red-500 hover:underline">Delete</a>
+                   class="inline-block bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-xs">Delete</a>
               </td>
             </tr>
           <?php endwhile; ?>

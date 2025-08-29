@@ -8,6 +8,12 @@ require("../db.php");
 //     exit();
 // }
 
+// $search = trim($_GET['search'] ?? '');
+// if ($search === '') {
+//     header('Location: /workloop/client/explore.php');
+//     exit;
+// }
+
 $search = trim($_GET['search'] ?? '');
 $category = $_GET['category'] ?? '';
 
@@ -18,15 +24,21 @@ if ($search === '') {
 
 // Fetch all categories for dropdown filter (category names as strings)
 $categories = [];
-$cat_result = $conn->query("SELECT name FROM categories ORDER BY name ASC");
-while ($cat = $cat_result->fetch_assoc()) {
-    $categories[] = $cat['name'];
+$catStmt = $conn->prepare("SELECT id, name FROM categories ORDER BY name ASC");
+$catStmt->execute();
+$catResult = $catStmt->get_result();
+while ($cat = $catResult->fetch_assoc()) {
+    $categories[] = $cat;
 }
+$catStmt->close();
+
 
 // Base SQL with proper join to get category name
-$sql = "SELECT gigs.*, users.name AS freelancer_name, users.profile_image
+$sql = "SELECT gigs.*, users.name AS freelancer_name, users.profile_image, categories.name AS category_name
         FROM gigs
-        JOIN users ON gigs.freelancer_id = users.id";
+        JOIN users ON gigs.freelancer_id = users.id
+        LEFT JOIN categories ON gigs.category = categories.id";
+
 
 $where = [];
 $params = [];
@@ -39,9 +51,10 @@ if ($search !== '') {
 }
 if ($category !== '') {
     $where[] = "gigs.category = ?";
-    $params[] = $category;
-    $types .= 's';
+    $params[] = (int)$category;
+    $types .= 'i'; // integer type
 }
+
 
 if ($where) {
     $sql .= " WHERE " . implode(" AND ", $where);
@@ -90,10 +103,10 @@ $result = $stmt->get_result();
                 <select name="category"
                     class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
                     <option value="">All Categories</option>
-                    <?php foreach ($categories as $catName): ?>
-                        <option value="<?= htmlspecialchars($catName) ?>" <?= ($catName === $category) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars(ucwords($catName)) ?>
-                        </option>
+                <?php foreach ($categories as $cat): ?>
+                    <option value="<?= (int)$cat['id'] ?>" <?= ($cat['id'] == $category) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars(ucwords($cat['name'])) ?>
+                    </option>
                     <?php endforeach; ?>
                 </select>
                 <button type="submit"

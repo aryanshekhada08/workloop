@@ -44,9 +44,6 @@ $chatsResult = $conn->query("
 
     <!-- Sidebar -->
     <aside class="w-64 bg-white shadow-lg flex flex-col fixed h-screen">
-        <div class="p-6 text-xl font-bold border-b border-gray-300">
-            Workloop Admin
-        </div>
         <?php include("../admin/includes/sidebar.php"); ?>
         <div class="p-6 border-t border-gray-300">
             <a href="logout.php" class="block px-3 py-2 rounded bg-red-600 text-white text-center hover:bg-red-700 font-semibold">Logout</a>

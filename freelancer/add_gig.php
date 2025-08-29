@@ -13,8 +13,15 @@ $message = '';
 // Fetch categories from database to populate dropdown
 $categories = [];
 $catStmt = $conn->prepare("SELECT id, name FROM categories ORDER BY name ASC");
+if (!$catStmt) {
+    die("Prepare failed: " . $conn->error);
+}
 $catStmt->execute();
 $catResult = $catStmt->get_result();
+if (!$catResult) {
+    die("Query failed: " . $conn->error);
+}
+
 while ($row = $catResult->fetch_assoc()) {
     $categories[] = $row;
 }
@@ -62,6 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $message = "Please fill in all required fields with valid data.";
     }
 }
+// echo "<pre>";
+// print_r($categories);
+// echo "</pre>";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
