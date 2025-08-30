@@ -59,6 +59,16 @@ $stmtReviewCheck->close();
 <?php include("../components/sidebar.php"); ?>
 <?php include("../components/Navbar.php"); ?>
 
+<?php if (isset($_GET['error'])): ?>
+    <div class="bg-red-100 text-red-700 px-4 py-3 rounded mb-4">
+        <?php if ($_GET['error'] === 'invalid_order'): ?>
+            Invalid order request.
+        <?php elseif ($_GET['error'] === 'unauthorized'): ?>
+            You are not authorized to view this order.
+        <?php endif; ?>
+    </div>
+<?php endif; ?>
+
 <div class="min-h-screen p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-lg mt-10">
     <h1 class="text-3xl font-bold mb-6 text-center">Order Details - #<?= htmlspecialchars($order_id) ?></h1>
 
@@ -96,26 +106,35 @@ $stmtReviewCheck->close();
 
         <!-- Client Actions and Delivery Details -->
         <div class="md:col-span-2">
-            <h2 class="text-2xl font-semibold mb-6">Actions</h2>
+    <h2 class="text-2xl font-semibold mb-6">Actions</h2>
 
-            <?php if ($order['status'] === 'pending'): ?>
-                <form method="POST" action="dummy_pay.php" class="mb-6">
-                    <input type="hidden" name="order_id" value="<?= $order_id ?>" />
-                    <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded hover:bg-green-700">
-                        <i class="fa-solid fa-credit-card mr-2"></i> Pay Now
-                    </button>
-                </form>
-            <?php elseif ($order['status'] === 'delivered'): ?>
-                <button id="openPaymentModal" type="button" class="bg-indigo-600 text-white px-6 py-3 rounded hover:bg-indigo-700 mb-6">
-                    <i class="fa-solid fa-credit-card mr-2"></i> Proceed to Payment
-                </button>
-            <?php elseif (in_array($order['status'], ['paid', 'completed'])): ?>
-                <p class="text-green-600 font-semibold mb-6">Payment Completed. Thank you!</p>
-            <?php elseif ($order['status'] === 'cancelled'): ?>
-                <p class="text-red-600 font-semibold mb-6">Order Cancelled.</p>
-            <?php else: ?>
-                <p class="text-gray-600 mb-6">No actions available at this time.</p>
-            <?php endif; ?>
+<?php if ($order['status'] === 'delivered'): ?>
+    <button id="openPaymentModal" type="button" 
+        class="bg-indigo-600 text-white px-6 py-3 rounded hover:bg-indigo-700 mb-6">
+        <i class="fa-solid fa-credit-card mr-2"></i> Proceed to Payment
+    </button>
+
+<?php elseif ($order['status'] === 'paid'): ?>
+    <p class="text-green-600 font-semibold mb-6">
+        Payment Completed. Waiting for freelancer to mark order as completed.
+    </p>
+
+<?php elseif ($order['status'] === 'completed'): ?>
+    <p class="text-green-600 font-semibold mb-4">Order Completed Successfully.</p>
+   <a href="Invoice.php?id=<?= intval($order['id']) ?>" 
+   class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700">
+   <i class="fa-solid fa-file-invoice mr-2"></i> Download Invoice
+</a>
+
+
+<?php elseif ($order['status'] === 'cancelled'): ?>
+    <p class="text-red-600 font-semibold mb-6">Order Cancelled.</p>
+
+<?php else: ?>
+    <p class="text-gray-600 mb-6">No actions available at this time.</p>
+<?php endif; ?>
+
+
 
             <h2 class="text-2xl font-semibold mb-3 mt-6">Delivery Details</h2>
 
