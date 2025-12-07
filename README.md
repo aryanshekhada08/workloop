@@ -14,7 +14,7 @@ It allows freelancers to offer services and clients to hire them through a smoot
 
 ## 🌍 Live Demo
 
-🔗 **https://workloop.ct.ws**  
+🔗 **https://workloop.ct.ws/workloop/**  
 (Replace this link with your actual hosted project URL.)
 
 ---
