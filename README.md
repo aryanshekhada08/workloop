@@ -1,4 +1,4 @@
-# Workloop
+# Workloop-Freelancing System
 
 ![PHP](https://img.shields.io/badge/PHP-8.x-blue?logo=php)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
@@ -14,8 +14,8 @@ It allows freelancers to offer services and clients to hire them through a smoot
 
 ## 🌍 Live Demo
 
-🔗 **https://workloop.ct.ws/workloop/**  
-(Replace this link with your actual hosted project URL.)
+🔗 **https://workloop.ct.ws/**  
+
 
 ---
 
